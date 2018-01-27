@@ -1,0 +1,6 @@
+# Site settings
+title: Homepage                     #你博客的标题
+header-img: static/yiyuanli_GettyVilla.jpg     #显示在首页的背景图片
+email: yiyuanli@smail.nju.edu.cn    
+url: "https://nativeatom.github.io/yiyuanli.github.io/index.html"          # 这个就是填写你的博客地址
+baseurl: ""      # 这个我们不用填写

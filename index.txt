@@ -1,0 +1,27 @@
+--- layout: default section: home title: "Hao Zhouï¼ˆå‘¨æµ©ï¼‰: Homepage" ---
+ 
+Hao Zhou
+Researcher Toutiao AI Lab Email: zhouhao.nlpbytedance.com , haozhou0806gmail.com
+
+Hello! I am a researcher at Toutiao AI lab, working on natural language processing. My research interests include syntax parsing, neural machine translation and natural language generation. 
+Before that, I was a PhD candidate in the NLP group of Nanjing University, advised by Prof. Jiajun Chen. I have also been a visiting student in Singapore University of Technology and Design, working with Prof. Yue Zhang, and a research intern in Huawei Noahâ€™s Ark Lab, Hong Kong.
+
+
+News
+
+	•	We have a machine translation demo, credits to Shenjian Zhao and Chengqi Zhao. Please have a try. 
+	•	We have research intern positions available in Toutiao AI lab. If you are interested, please feel free to contact me.
+
+Publications 
+	•	Modeling Past and Future for Neural Machine Translation Hao Zhou*, Zhenting Yu*, Yue Zhang, Shujian Huang, Xin-Yu Dai, and Jiajun Chen In EMNLP, 2017. [bib] [pdf] [code] 
+	•	Word Context Character Embeddings for Chinese Word Segmentation  Hao Zhou*, Zhenting Yu*, Yue Zhang, Shujian Huang, Xin-Yu Dai, and Jiajun Chen In EMNLP, 2017. [bib] [pdf] [code] 
+	•	Chunk-based Bi-Scale Decoder for Neural Machine Translation  Hao Zhou, Zhaopeng Tu, Shujian Huang, Xiaohua Liu, Hang Li and Jiajun Chen In ACL, 2017. [bib] [pdf] [code] 
+	•	A Neural Probabilistic Structured-Prediction Method for Transition-Based Natural Language Processing  Hao Zhou, Yue Zhang, Chuan Chen, Shujian Huang, Xin-Yu Dai, and Jiajun Chen In Journal of Artificial Intelligence Research (JAIR), 2017. [bib] [pdf] 
+	•	A Search-Based Dynamic Reranking Model for Dependency Parsing Hao Zhou, Yue Zhang, Shujian Huang, Junsheng Zhou, Xin-Yu Dai, and Jiajun Chen In ACL, 2016 [bib] [pdf] [code] 
+	•	Evaluating a Deterministic Shift-Reduce Neural Parser for Constituent Parsing Hao Zhou, Yue Zhang, Shujian Huang, Xin-Yu Dai, and Jiajun Chen In LREC, 2016 [bib] [pdf] [code] 
+	•	Enhancing Shift-Reduce Constituent Parsing with Action N-Gram Model Hao Zhou, Shujian Huang, Junsheng Zhou, Yue Zhang, Huadong Chen, Xin-Yu Dai, Chuan Chen, and Jiajun Chen In ACM Transactions on Asian and Low-Resource Language Information Processing (TALLIP), 2016 [bib] [pdf] [code] 
+	•	A Neural Probabilistic Structured-Prediction Model for Transition-Based Dependency Parsing Hao Zhou, Yue Zhang, Shujian Huang, and Jiajun Chen In ACL, 2015 [bib] [pdf] [code] 
+
+Software
+	•	NJU-Parser A fast implementation of shift-reuce constituent parser in JAVA. 
+	•	SnnOw A toolkit for fundamental natural language processing with neural networks. 
