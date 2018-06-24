@@ -66,14 +66,14 @@
             <li {% if page.section == 'about'%} class="active" {% endif %} >
               <a href="index.html" font-size:10px>About me</a>
             </li>
-            <li {% if page.section == 'Academic'%} class="active" {% endif %} >
+            <!--<li {% if page.section == 'Academic'%} class="active" {% endif %} >
               <a href="academic.html">Academic</a>
             </li>
             <li {% if page.section == 'miscellanesous'%} class="active" {% endif %} >
               <a href="miscellaneous.html">Miscellaneous</a>
               <li {% if page.section == 'resume'%} class="active" {% endif %} >
               <a href="document/Resume_yiyuan.pdf">Resume</a>
-            </li>
+            </li>-->
           </ul>
         </div>
       </div>
