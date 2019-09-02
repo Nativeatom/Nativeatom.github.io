@@ -48,13 +48,20 @@ title: "Yiyuan Li"
 <table width="100%" border="0" align="center" cellspacing="0" cellpadding="20">
         <!-- <tbody><tr onmouseout="maml_stop()" onmouseover="maml_start()"> -->
         <tbody>
-          
-           <td width="25%" valign="top">
+
+        <tr onmouseout="codegen_stop()" onmouseover="codegen_start()">
+          <td width="25%" valign="top">
             <div class="one">
-                <div class="two" id="summar" style="opacity: 0;"><img src="static/NaturalLanguageProcessing/Summarisation/model_architecture.png" width="250" height="220"></div>
-<!--                 <img src="./_files/maml_diagram.png" width="150" height="140">-->
-             </div>
-              </td>
+                <div class="two" id="codegeneration" style="opacity: 0;"><img src="https://drive.google.com/file/d/1828QBFsyahDVsN12KiQrfGcVNTYdye5a/view?usp=sharing" width="250" height="220"></div>
+            </div>
+             <script type="text/javascript">
+              function codegen_start() {
+                document.getElementById('codegeneration').style.opacity = "1";
+              }
+              function codegen_stop() {
+                document.getElementById('codegeneration').style.opacity = "1";
+              }
+              sv2p_stop()
               <td width="75%" valign="top">
                 <heading2><i></i></heading2><br>
               <p>
@@ -64,8 +71,8 @@ title: "Yiyuan Li"
                 <p></p>
               <a href="https://www.linkedin.com/in/yiheng-zhou-512336a7/">Yiheng Zhou<sup>*</sup></a>
               <strong>Yiyuan Li<sup>*</sup></strong>
-              <a href="http://www.andrew.cmu.edu/user/zimengq/">Zimeng Qiu</a>
-              <a href="https://docs.google.com/presentation/d/1G5G0up-ExkqG3SByI7mOT2TRdtf8XCXte28NSkaGZTg/edit?usp=sharing">[Slides]</a>
+              <a href="http://www.andrew.cmu.edu/user/zimengq/">Zimeng Qiu</a><br>
+              <a href="https://drive.google.com/file/d/1qsHE9T3oRKTP8wYpqHG52pS2fTjJsilb/view?usp=sharing">[Pdf]</a>
               </p><p></p>
               <p> 
               - Incorporated documentation programming knowledge into code generation by proposing code-tagging as reward (CTPG).
@@ -82,7 +89,7 @@ title: "Yiyuan Li"
 
           <td width="25%" valign="top">
             <div class="one">
-                <div class="two" id="summar" style="opacity: 0;"><img src="https://drive.google.com/file/d/1828QBFsyahDVsN12KiQrfGcVNTYdye5a/view?usp=sharing" width="250" height="220"></div>
+                <div class="two" id="summar" style="opacity: 0;"><img src="static/NaturalLanguageProcessing/Summarisation/model_architecture.png" width="250" height="220"></div>
              </div>
 
               </td>
@@ -93,8 +100,8 @@ title: "Yiyuan Li"
                 <papertitle><font size="4">Scientific Document Summarisation</font></papertitle><br>
               </heading>
                 <p></p>
-              <strong>Yiyuan Li</strong>
-              <a href="https://drive.google.com/file/d/1qsHE9T3oRKTP8wYpqHG52pS2fTjJsilb/view?usp=sharing">[Pdf]</a>
+              <strong>Yiyuan Li</strong><br>
+              <a href="https://docs.google.com/presentation/d/1G5G0up-ExkqG3SByI7mOT2TRdtf8XCXte28NSkaGZTg/edit?usp=sharing">[Slides]</a>
               </p><p></p>
               <p> 
               - Crawled and processed data from ScienceDirect; built unsupervised alignment of section and abstract sentences for data selection.
@@ -175,7 +182,7 @@ title: "Yiyuan Li"
             function maml_start() {
               document.getElementById('maml_image').style.opacity = "1";
             }
-   function maml_stop() {
+            function maml_stop() {
               document.getElementById('maml_image').style.opacity = "1";
             }
             maml_stop()
@@ -212,7 +219,7 @@ title: "Yiyuan Li"
             function sv2p_start() {
               document.getElementById('sv2p_gif').style.opacity = "1";
             }
-   function sv2p_stop() {
+            function sv2p_stop() {
               document.getElementById('sv2p_gif').style.opacity = "1";
             }
             sv2p_stop()
@@ -251,7 +258,7 @@ title: "Yiyuan Li"
             </tr> 
 
 
-                <tr onmouseout="nypt_stop()" onmouseover="nypt_start()">
+          <tr onmouseout="nypt_stop()" onmouseover="nypt_start()">
           <td width="25%" valign="top">
   <!--           <heading2><i>Recent Preprints</i></heading2><br><br> -->
             <div class="one">
