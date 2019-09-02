@@ -52,7 +52,7 @@ title: "Yiyuan Li"
         <tr onmouseout="codegen_stop()" onmouseover="codegen_start()">
             <td width="25%" valign="top">
                 <div class="one">
-                    <div class="two" id="codegeneration" style="opacity: 0;"><img src="static/NaturalLanguageProcessing/CodeGeneration/tag_example.png" width="250" height="220"></div>
+                    <div class="two" id="codegeneration" style="opacity: 0;"><img src="https://drive.google.com/file/d/1828QBFsyahDVsN12KiQrfGcVNTYdye5a/view?usp=sharing" width="250" height="220"></div>
                 </div>
                 <script type="text/javascript">
                     function codegen_start() {
@@ -116,24 +116,21 @@ title: "Yiyuan Li"
             </tr> 
 
 
-<!--           <tr onmouseout="yelp_stop()" onmouseover="yelp_start()"> -->
-          
-          
-       <tr onmouseout="yelp_stop()" onmouseover="yelp_start()">
-          <td width="25%" valign="top">
+        <tr onmouseout="image_stop('yelp_image')" onmouseover="image_start('yelp_image')">
+            <td width="25%" valign="top">
   <!--           <heading2><i>Recent Preprints</i></heading2><br><br> -->
             <div class="one">
                 <div class="two" id="yelp_image" style="opacity: 0;"><img src="static/Machine Learning/Vegas_Clusters.png" width="250" height="280"></div>
 <!--                 <img src="./_files/maml_diagram.png" width="150" height="140">-->
-             </div>
+            </div>
             <script async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript">
-                function yelp_start() {
-                document.getElementById('yelp_image').style.opacity = "1";
+                function image_start(elem_id) {
+                    document.getElementById(elem_id).style.opacity = "1";
                 }
-                function yelp_stop() {
-                document.getElementById('yelp_image').style.opacity = "1";
+                function image_stop(elem_id) {
+                    document.getElementById(elem_id).style.opacity = "1";
                 }
-                yelp_stop();
+                image_stop('yelp_image');
             </script>
 
             </td>
@@ -202,21 +199,11 @@ title: "Yiyuan Li"
             </td>
             </tr>
 
-        <tr onmouseout="sv2p_stop()" onmouseover="sv2p_start()">
+            <tr onmouseout="image_stop('sv2p_gif')" onmouseover="image_start('sv2p_gif')">
             <td width="25%" valign="top">
             <div class="one">
                 <div class="two" id="sv2p_gif" style="opacity: 0;"><img src="static/Compliant Robotics/robotics.png" width="250" height="200">
             </div>
-            <script type="text/javascript">
-                function sv2p_start() {
-                    document.getElementById('sv2p_gif').style.opacity = "1";
-                }
-                function sv2p_stop() {
-                    document.getElementById('sv2p_gif').style.opacity = "1";
-                }
-                sv2p_stop();
-            </script>
-
             </td>
             <td width="75%" valign="top">
             <p>
@@ -254,7 +241,6 @@ title: "Yiyuan Li"
   <!--           <heading2><i>Recent Preprints</i></heading2><br><br> -->
             <div class="one">
                 <div class="two" id="motor_image" style="opacity: 0;"><img src="static/Physics/Liquid.Film.Motor/LiquidFilmMotor.png" alt="Liquid Film Motor" width="250" height="280"></div>
-<!--                 <img src="./_files/maml_diagram.png" width="150" height="140">-->
             </div>
             <script async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript">
                 function nypt_start() {
