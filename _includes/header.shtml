@@ -72,7 +72,7 @@
             <li {% if page.section == 'miscellanesous'%} class="active" {% endif %} >
               <a href="miscellaneous.html">Miscellaneous</a>
               <li {% if page.section == 'resume'%} class="active" {% endif %} >
-              <a href="document/YIYUAN LI CV.pdf">Resume</a>
+              <a href="document/YIYUAN_LI_CV.pdf">Resume</a>
             </li>
           </ul>
         </div>
