@@ -13,9 +13,11 @@
         <script>
           var countInforId = "clustrmaps-widget-v2"
           var targetId = 'greeting to visitor';
-          const counterElement = document.querySelector('.clstm clustrmaps-visitors').innerText;
+          var visitMegaElement = document.getElementById(countInforId);
+          var counterElement = visitMegaElement.querySelector('div.clustrmaps-visitors');
           if (counterElement) {
-            const numberOfVisit = counterElement.match(/\d{1,3}(?:,\d{3})*/)?.[0];
+            var counterElementText = counterElement.innerText;
+            var numberOfVisit = counterElement.match(/\d{1,3}(?:,\d{3})*/)?.[0];
             console.log("number of Visit: " + numberOfVisit);
             document.getElementById(targetId).style.display = 'inline-block';
             document.getElementById(targetId).innerText = 
