@@ -16,8 +16,16 @@
           var visitMegaElement = document.getElementById(countInforId);
           var counterElement = visitMegaElement.querySelector('div.clustrmaps-visitors');
           if (counterElement) {
-            var counterElementText = counterElement.innerText;
-            var numberOfVisit = counterElement.match(/\d{1,3}(?:,\d{3})*/)?.[0];
+            const counterElementText = counterElement.innerText;
+            console.log("find innertext: " + counterElementText);
+            if (typeof counterElementText === 'string') {
+              const numberOfVisit = counterElement.match(/\d{1,3}(?:,\d{3})*/)?.[0];
+              if (numberOfVisit) {
+                console.log(numberOfVisit); // 输出格式化后的数字
+              }
+            } else {
+              console.error('元素文本内容无效');
+            }
             console.log("number of Visit: " + numberOfVisit);
             document.getElementById(targetId).style.display = 'inline-block';
             document.getElementById(targetId).innerText = 
