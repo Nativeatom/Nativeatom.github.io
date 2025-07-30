@@ -14,6 +14,7 @@
     // Visitor count extraction methods
     const VisitorCounter = {
         retryCount: 0,
+        isDisplaying: false, // Flag to prevent multiple simultaneous displays
         
         // Method 1: Extract from ClustrMaps widget DOM
         extractFromWidget: function() {
@@ -253,27 +254,37 @@
         // Main function to run the visitor counter
         init: function() {
             const self = this;
+            let hasDisplayed = false; // Track if we've successfully displayed a greeting
             
             async function tryExtract() {
-                const count = self.extractCount();
-                await self.displayGreeting(count);
+                // Don't retry if we've already displayed a greeting
+                if (hasDisplayed) {
+                    console.log('Greeting already displayed, skipping retry');
+                    return;
+                }
                 
-                // If we couldn't get the count and haven't exceeded retries, try again
-                if (!count && self.retryCount < CONFIG.maxRetries) {
+                const count = self.extractCount();
+                const success = await self.displayGreeting(count);
+                
+                if (success) {
+                    hasDisplayed = true;
+                    console.log('Successfully extracted and displayed visitor count');
+                } else if (!count && self.retryCount < CONFIG.maxRetries) {
                     self.retryCount++;
                     console.log(`Retry ${self.retryCount}/${CONFIG.maxRetries} in ${CONFIG.retryDelay}ms`);
                     setTimeout(tryExtract, CONFIG.retryDelay);
-                } else if (count) {
-                    console.log('Successfully extracted and displayed visitor count');
                 }
             }
             
-            // Start the extraction process with multiple attempts
+            // Start the extraction process with a single attempt
             setTimeout(tryExtract, 1000); // Initial delay to let ClustrMaps load
             
-            // Also try after a longer delay in case ClustrMaps loads slowly
-            setTimeout(tryExtract, 3000);
-            setTimeout(tryExtract, 5000);
+            // Only retry once more if the first attempt fails
+            setTimeout(() => {
+                if (!hasDisplayed) {
+                    tryExtract();
+                }
+            }, 3000);
         },
         
         // Format number with commas
@@ -283,11 +294,27 @@
         
         // Display the greeting with typing animation
         displayGreeting: async function(count) {
+            // Prevent multiple simultaneous displays
+            if (this.isDisplaying) {
+                console.log('Greeting already being displayed, skipping...');
+                return false;
+            }
+            
             const greetingElement = document.getElementById(CONFIG.greetingElementId);
             if (!greetingElement) {
                 console.log('Greeting element not found');
-                return;
+                return false;
             }
+            
+            // Check if greeting is already visible and complete
+            if (greetingElement.style.display === 'block' && 
+                greetingElement.querySelector('.cursor') === null && 
+                greetingElement.innerHTML.trim() !== '') {
+                console.log('Greeting already displayed completely, skipping...');
+                return false;
+            }
+            
+            this.isDisplaying = true;
             
             // Try to get location information
             let location = null;
@@ -325,6 +352,8 @@
             greetingElement.style.display = 'block';
             this.typeWriter(greetingElement, message, 50); // 50ms delay between characters
             console.log('Greeting displayed:', message);
+            
+            return true; // Return success indicator
         },
         
         // Get country name from country code
@@ -359,6 +388,8 @@
             element.innerHTML = '<h3><span id="typing-text"></span><span class="cursor">|</span></h3>';
             const typingElement = element.querySelector('#typing-text');
             
+            const self = this; // Store reference to VisitorCounter
+            
             function type() {
                 if (i < text.length) {
                     typingElement.innerHTML += text.charAt(i);
@@ -371,6 +402,9 @@
                         if (cursor) {
                             cursor.style.display = 'none';
                         }
+                        // Reset the display flag
+                        self.isDisplaying = false;
+                        console.log('Typing animation completed');
                     }, 500);
                 }
             }
