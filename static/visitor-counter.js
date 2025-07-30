@@ -71,6 +71,153 @@
             return null;
         },
         
+        // Extract location information from ClustrMaps
+        extractLocation: function() {
+            // Try to get location from various sources
+            let location = null;
+            
+            // Method 1: Try to get from ClustrMaps API data
+            if (window._clustrmaps && window._clustrmaps.data) {
+                location = this.extractLocationFromAPI();
+            }
+            
+            // Method 2: Try to get from DOM elements
+            if (!location) {
+                location = this.extractLocationFromDOM();
+            }
+            
+            // Method 3: Try to get from browser geolocation (if user allows)
+            if (!location) {
+                location = this.getCurrentLocation();
+            }
+            
+            return location;
+        },
+        
+        // Extract location from ClustrMaps API data
+        extractLocationFromAPI: function() {
+            try {
+                // This would require ClustrMaps to expose location data
+                // For now, we'll use a fallback approach
+                return null;
+            } catch (e) {
+                console.log('Could not extract location from API:', e);
+                return null;
+            }
+        },
+        
+        // Extract location from DOM elements
+        extractLocationFromDOM: function() {
+            const widget = document.getElementById(CONFIG.widgetElementId);
+            if (!widget) return null;
+            
+            // Look for location-related elements
+            const locationSelectors = [
+                '[class*="location"]',
+                '[class*="country"]',
+                '[class*="region"]',
+                '[class*="city"]',
+                '.clustrmaps-connection'
+            ];
+            
+            for (let selector of locationSelectors) {
+                const element = widget.querySelector(selector);
+                if (element) {
+                    const text = element.innerText || element.textContent;
+                    if (text && text.trim()) {
+                        console.log('Found location element:', text);
+                        return this.parseLocation(text);
+                    }
+                }
+            }
+            
+            return null;
+        },
+        
+        // Get current location using browser geolocation
+        getCurrentLocation: function() {
+            return new Promise((resolve) => {
+                if (!navigator.geolocation) {
+                    resolve(null);
+                    return;
+                }
+                
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const location = this.reverseGeocode(position.coords.latitude, position.coords.longitude);
+                        resolve(location);
+                    },
+                    (error) => {
+                        console.log('Geolocation error:', error);
+                        resolve(null);
+                    },
+                    { timeout: 5000, enableHighAccuracy: false }
+                );
+            });
+        },
+        
+        // Reverse geocoding to get country/city from coordinates
+        reverseGeocode: function(lat, lng) {
+            // For now, we'll use a simple mapping of coordinates to countries
+            // In a real implementation, you'd use a geocoding service like Google Maps API
+            const countryMap = {
+                'US': { lat: [24, 71], lng: [-125, -66] },
+                'CA': { lat: [41, 84], lng: [-141, -52] },
+                'CN': { lat: [18, 54], lng: [73, 135] },
+                'IN': { lat: [8, 37], lng: [68, 97] },
+                'BR': { lat: [-34, 5], lng: [-74, -34] },
+                'RU': { lat: [41, 82], lng: [26, 190] },
+                'JP': { lat: [24, 46], lng: [122, 146] },
+                'DE': { lat: [47, 55], lng: [6, 15] },
+                'GB': { lat: [49, 61], lng: [-8, 2] },
+                'FR': { lat: [41, 51], lng: [-5, 10] }
+            };
+            
+            for (let country in countryMap) {
+                const bounds = countryMap[country];
+                if (lat >= bounds.lat[0] && lat <= bounds.lat[1] && 
+                    lng >= bounds.lng[0] && lng <= bounds.lng[1]) {
+                    return { country: country, type: 'geolocation' };
+                }
+            }
+            
+            return null;
+        },
+        
+        // Parse location text to extract country/city
+        parseLocation: function(text) {
+            const countryPatterns = {
+                'United States': 'US',
+                'USA': 'US',
+                'Canada': 'CA',
+                'China': 'CN',
+                'India': 'IN',
+                'Brazil': 'BR',
+                'Russia': 'RU',
+                'Japan': 'JP',
+                'Germany': 'DE',
+                'United Kingdom': 'GB',
+                'UK': 'GB',
+                'France': 'FR',
+                'Australia': 'AU',
+                'Mexico': 'MX',
+                'Italy': 'IT',
+                'Spain': 'ES',
+                'South Korea': 'KR',
+                'Netherlands': 'NL',
+                'Switzerland': 'CH',
+                'Sweden': 'SE'
+            };
+            
+            for (let pattern in countryPatterns) {
+                if (text.toLowerCase().includes(pattern.toLowerCase())) {
+                    return { country: countryPatterns[pattern], type: 'parsed' };
+                }
+            }
+            
+            return null;
+        },
+        
         // Method 2: Try to get from ClustrMaps API (if available)
         extractFromAPI: function() {
             // This is a fallback method - ClustrMaps doesn't provide a public API
@@ -103,17 +250,52 @@
             return count;
         },
         
+        // Main function to run the visitor counter
+        init: function() {
+            const self = this;
+            
+            async function tryExtract() {
+                const count = self.extractCount();
+                await self.displayGreeting(count);
+                
+                // If we couldn't get the count and haven't exceeded retries, try again
+                if (!count && self.retryCount < CONFIG.maxRetries) {
+                    self.retryCount++;
+                    console.log(`Retry ${self.retryCount}/${CONFIG.maxRetries} in ${CONFIG.retryDelay}ms`);
+                    setTimeout(tryExtract, CONFIG.retryDelay);
+                } else if (count) {
+                    console.log('Successfully extracted and displayed visitor count');
+                }
+            }
+            
+            // Start the extraction process with multiple attempts
+            setTimeout(tryExtract, 1000); // Initial delay to let ClustrMaps load
+            
+            // Also try after a longer delay in case ClustrMaps loads slowly
+            setTimeout(tryExtract, 3000);
+            setTimeout(tryExtract, 5000);
+        },
+        
         // Format number with commas
         formatNumber: function(num) {
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         },
         
         // Display the greeting with typing animation
-        displayGreeting: function(count) {
+        displayGreeting: async function(count) {
             const greetingElement = document.getElementById(CONFIG.greetingElementId);
             if (!greetingElement) {
                 console.log('Greeting element not found');
                 return;
+            }
+            
+            // Try to get location information
+            let location = null;
+            try {
+                location = await this.extractLocation();
+                console.log('Location extracted:', location);
+            } catch (e) {
+                console.log('Error extracting location:', e);
             }
             
             let message;
@@ -121,16 +303,54 @@
                 // Add ordinal suffix and format number with commas
                 const suffix = this.getOrdinalSuffix(count);
                 const formattedCount = this.formatNumber(count);
-                message = `Welcome my friend, you're the ${formattedCount}${suffix} visitor to my space! 🎉`;
-                console.log(`Displaying greeting with count: ${formattedCount}${suffix}`);
+                
+                // Add location to message if available
+                if (location && location.country) {
+                    const countryName = this.getCountryName(location.country);
+                    message = `Welcome my friend from ${countryName}, you're the ${formattedCount}${suffix} visitor to my space! 🎉`;
+                } else {
+                    message = `Welcome my friend, you're the ${formattedCount}${suffix} visitor to my space! 🎉`;
+                }
+                console.log(`Displaying greeting with count: ${formattedCount}${suffix} and location: ${location ? location.country : 'unknown'}`);
             } else {
-                message = 'Welcome my friend, you are a visitor to my space! 🎉';
+                if (location && location.country) {
+                    const countryName = this.getCountryName(location.country);
+                    message = `Welcome my friend from ${countryName}, you are a visitor to my space! 🎉`;
+                } else {
+                    message = 'Welcome my friend, you are a visitor to my space! 🎉';
+                }
                 console.log('Displaying fallback greeting (no count available)');
             }
             
             greetingElement.style.display = 'block';
             this.typeWriter(greetingElement, message, 50); // 50ms delay between characters
             console.log('Greeting displayed:', message);
+        },
+        
+        // Get country name from country code
+        getCountryName: function(countryCode) {
+            const countryNames = {
+                'US': 'the United States',
+                'CA': 'Canada',
+                'CN': 'China',
+                'IN': 'India',
+                'BR': 'Brazil',
+                'RU': 'Russia',
+                'JP': 'Japan',
+                'DE': 'Germany',
+                'GB': 'the United Kingdom',
+                'FR': 'France',
+                'AU': 'Australia',
+                'MX': 'Mexico',
+                'IT': 'Italy',
+                'ES': 'Spain',
+                'KR': 'South Korea',
+                'NL': 'the Netherlands',
+                'CH': 'Switzerland',
+                'SE': 'Sweden'
+            };
+            
+            return countryNames[countryCode] || countryCode;
         },
         
         // Typewriter effect
@@ -175,31 +395,7 @@
             return 'th';
         },
         
-        // Main function to run the visitor counter
-        init: function() {
-            const self = this;
-            
-            function tryExtract() {
-                const count = self.extractCount();
-                self.displayGreeting(count);
-                
-                // If we couldn't get the count and haven't exceeded retries, try again
-                if (!count && self.retryCount < CONFIG.maxRetries) {
-                    self.retryCount++;
-                    console.log(`Retry ${self.retryCount}/${CONFIG.maxRetries} in ${CONFIG.retryDelay}ms`);
-                    setTimeout(tryExtract, CONFIG.retryDelay);
-                } else if (count) {
-                    console.log('Successfully extracted and displayed visitor count');
-                }
-            }
-            
-            // Start the extraction process with multiple attempts
-            setTimeout(tryExtract, 1000); // Initial delay to let ClustrMaps load
-            
-            // Also try after a longer delay in case ClustrMaps loads slowly
-            setTimeout(tryExtract, 3000);
-            setTimeout(tryExtract, 5000);
-        }
+
     };
     
     // Initialize when DOM is ready

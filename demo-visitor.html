@@ -133,6 +133,15 @@
         </div>
         
         <div class="demo-section">
+            <h2>🌍 Location Integration</h2>
+            <div class="feature-demo">
+                <p>See how the visitor counter includes location information:</p>
+                <button class="demo-button" onclick="demoLocationExample()">Show Location Example</button>
+                <div id="location-demo" class="result-box"></div>
+            </div>
+        </div>
+        
+        <div class="demo-section">
             <h2>🎯 Complete Example</h2>
             <div class="feature-demo">
                 <p>Here's how the complete visitor counter works:</p>
@@ -205,6 +214,25 @@
             
             document.getElementById('ordinal-demo').innerHTML = 
                 '<strong>Ordinal Number Examples:</strong><br>' + results.join(', ');
+        }
+        
+        function demoLocationExample() {
+            const examples = [
+                { count: 1234, country: 'US', message: 'Welcome my friend from the United States, you\'re the 1,234th visitor to my space! 🎉' },
+                { count: 5678, country: 'CN', message: 'Welcome my friend from China, you\'re the 5,678th visitor to my space! 🎉' },
+                { count: 999, country: 'GB', message: 'Welcome my friend from the United Kingdom, you\'re the 999th visitor to my space! 🎉' },
+                { count: 12345, country: null, message: 'Welcome my friend, you\'re the 12,345th visitor to my space! 🎉' }
+            ];
+            
+            let html = '<strong>Location Integration Examples:</strong><br><br>';
+            examples.forEach((example, index) => {
+                html += `<strong>Example ${index + 1}:</strong><br>`;
+                html += `Visitor count: ${formatNumber(example.count)}<br>`;
+                html += `Country: ${example.country || 'Unknown'}<br>`;
+                html += `Message: "${example.message}"<br><br>`;
+            });
+            
+            document.getElementById('location-demo').innerHTML = html;
         }
         
         function demoCompleteExample() {
