@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Counter Demo</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .demo-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: #fafafa;
+        }
+        
+        .demo-title {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .feature-demo {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .demo-button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+            transition: transform 0.2s;
+        }
+        
+        .demo-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .result-box {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        
+        /* Typing animation styles */
+        .cursor {
+            animation: blink 1s infinite;
+            color: #007bff;
+            font-weight: bold;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        .typing-demo {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .typing-demo h3 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="demo-title">🎉 Visitor Counter Demo</h1>
+        
+        <div class="demo-section">
+            <h2>✨ Feature 1: Number Formatting with Commas</h2>
+            <div class="feature-demo">
+                <p>Large numbers are automatically formatted with commas for better readability:</p>
+                <button class="demo-button" onclick="demoNumberFormatting()">Demo Number Formatting</button>
+                <div id="number-demo" class="result-box"></div>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>✨ Feature 2: Typing Animation Effect</h2>
+            <div class="feature-demo">
+                <p>Watch the welcome message appear with a typing animation:</p>
+                <button class="demo-button" onclick="demoTypingAnimation()">Start Typing Demo</button>
+                <div id="typing-demo" class="typing-demo" style="display: none;">
+                    <h3><span id="typing-text"></span><span class="cursor">|</span></h3>
+                </div>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>✨ Feature 3: Ordinal Numbers</h2>
+            <div class="feature-demo">
+                <p>Correct ordinal suffixes (1st, 2nd, 3rd, etc.):</p>
+                <button class="demo-button" onclick="demoOrdinalNumbers()">Demo Ordinal Numbers</button>
+                <div id="ordinal-demo" class="result-box"></div>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>🎯 Complete Example</h2>
+            <div class="feature-demo">
+                <p>Here's how the complete visitor counter works:</p>
+                <button class="demo-button" onclick="demoCompleteExample()">Show Complete Example</button>
+                <div id="complete-demo" class="result-box"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+        
+        function getOrdinalSuffix(num) {
+            const j = num % 10;
+            const k = num % 100;
+            
+            if (j === 1 && k !== 11) return 'st';
+            if (j === 2 && k !== 12) return 'nd';
+            if (j === 3 && k !== 13) return 'rd';
+            return 'th';
+        }
+        
+        function typeWriter(element, text, speed) {
+            let i = 0;
+            element.innerHTML = '<span id="typing-text"></span><span class="cursor">|</span>';
+            const typingElement = element.querySelector('#typing-text');
+            
+            function type() {
+                if (i < text.length) {
+                    typingElement.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                } else {
+                    setTimeout(() => {
+                        const cursor = element.querySelector('.cursor');
+                        if (cursor) cursor.style.display = 'none';
+                    }, 500);
+                }
+            }
+            
+            type();
+        }
+        
+        function demoNumberFormatting() {
+            const testNumbers = [1000, 12345, 123456, 1234567, 12345678, 123456789];
+            const results = testNumbers.map(num => {
+                return `${num} → ${formatNumber(num)}`;
+            });
+            
+            document.getElementById('number-demo').innerHTML = 
+                '<strong>Number Formatting Examples:</strong><br>' + results.join('<br>');
+        }
+        
+        function demoTypingAnimation() {
+            const demoElement = document.getElementById('typing-demo');
+            demoElement.style.display = 'block';
+            demoElement.innerHTML = '<h3><span id="typing-text"></span><span class="cursor">|</span></h3>';
+            
+            const message = "Welcome my friend, you're the 1,234th visitor to my space! 🎉";
+            typeWriter(demoElement.querySelector('h3'), message, 50);
+        }
+        
+        function demoOrdinalNumbers() {
+            const testNumbers = [1, 2, 3, 4, 5, 11, 12, 13, 21, 22, 23, 101, 102, 103];
+            const results = testNumbers.map(num => {
+                return `${num}${getOrdinalSuffix(num)}`;
+            });
+            
+            document.getElementById('ordinal-demo').innerHTML = 
+                '<strong>Ordinal Number Examples:</strong><br>' + results.join(', ');
+        }
+        
+        function demoCompleteExample() {
+            const visitorCount = 1234567;
+            const formattedCount = formatNumber(visitorCount);
+            const suffix = getOrdinalSuffix(visitorCount);
+            const message = `Welcome my friend, you're the ${formattedCount}${suffix} visitor to my space! 🎉`;
+            
+            document.getElementById('complete-demo').innerHTML = 
+                `<strong>Complete Example:</strong><br>
+                Raw number: ${visitorCount}<br>
+                Formatted: ${formattedCount}<br>
+                Ordinal: ${suffix}<br>
+                Final message: "${message}"`;
+        }
+    </script>
+</body>
+</html> 

@@ -103,7 +103,12 @@
             return count;
         },
         
-        // Display the greeting
+        // Format number with commas
+        formatNumber: function(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        },
+        
+        // Display the greeting with typing animation
         displayGreeting: function(count) {
             const greetingElement = document.getElementById(CONFIG.greetingElementId);
             if (!greetingElement) {
@@ -113,18 +118,44 @@
             
             let message;
             if (count && count > 0) {
-                // Add ordinal suffix
+                // Add ordinal suffix and format number with commas
                 const suffix = this.getOrdinalSuffix(count);
-                message = `Welcome my friend, you're the ${count}${suffix} visitor to my space! 🎉`;
-                console.log(`Displaying greeting with count: ${count}${suffix}`);
+                const formattedCount = this.formatNumber(count);
+                message = `Welcome my friend, you're the ${formattedCount}${suffix} visitor to my space! 🎉`;
+                console.log(`Displaying greeting with count: ${formattedCount}${suffix}`);
             } else {
                 message = 'Welcome my friend, you are a visitor to my space! 🎉';
                 console.log('Displaying fallback greeting (no count available)');
             }
             
             greetingElement.style.display = 'block';
-            greetingElement.innerHTML = `<h3>${message}</h3>`;
+            this.typeWriter(greetingElement, message, 50); // 50ms delay between characters
             console.log('Greeting displayed:', message);
+        },
+        
+        // Typewriter effect
+        typeWriter: function(element, text, speed) {
+            let i = 0;
+            element.innerHTML = '<h3><span id="typing-text"></span><span class="cursor">|</span></h3>';
+            const typingElement = element.querySelector('#typing-text');
+            
+            function type() {
+                if (i < text.length) {
+                    typingElement.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                } else {
+                    // Remove cursor after typing is complete
+                    setTimeout(() => {
+                        const cursor = element.querySelector('.cursor');
+                        if (cursor) {
+                            cursor.style.display = 'none';
+                        }
+                    }, 500);
+                }
+            }
+            
+            type();
         },
         
         // Get ordinal suffix (1st, 2nd, 3rd, etc.)

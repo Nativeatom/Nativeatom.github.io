@@ -11,5 +11,30 @@
         <script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=167&t=tt&d=Kq8aoD4X7FTCnCJkmBeWYXtHBUvPNsnygimPE1wLR6A&co=2d78ad&cmo=3acc3a&cmn=ff5353&ct=ffffff"></script>
         <script type="text/javascript" id="clstr_globe" src="//cdn.clustrmaps.com/globe.js?d=Kq8aoD4X7FTCnCJkmBeWYXtHBUvPNsnygimPE1wLR6A"></script>
         <script src="static/visitor-counter.js"></script>
+        <style>
+            /* Typing animation styles */
+            .cursor {
+                animation: blink 1s infinite;
+                color: #007bff;
+                font-weight: bold;
+            }
+            
+            @keyframes blink {
+                0%, 50% { opacity: 1; }
+                51%, 100% { opacity: 0; }
+            }
+            
+            #greeting to visitor h3 {
+                color: #2c3e50;
+                font-weight: 600;
+                margin: 10px 0;
+                padding: 10px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                background-clip: text;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+        </style>
   </body>
 </html>
