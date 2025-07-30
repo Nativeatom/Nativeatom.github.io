@@ -10,31 +10,6 @@
     <script src="static/bootstrap/js/bootstrap.js"></script>
         <script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=167&t=tt&d=Kq8aoD4X7FTCnCJkmBeWYXtHBUvPNsnygimPE1wLR6A&co=2d78ad&cmo=3acc3a&cmn=ff5353&ct=ffffff"></script>
         <script type="text/javascript" id="clstr_globe" src="//cdn.clustrmaps.com/globe.js?d=Kq8aoD4X7FTCnCJkmBeWYXtHBUvPNsnygimPE1wLR6A"></script>
-        <script>
-          var countInforId = "clustrmaps-widget-v2"
-          var targetId = 'greeting to visitor';
-          var visitMegaElement = document.getElementById(countInforId);
-          var counterElement = visitMegaElement.querySelector('div.clustrmaps-visitors');
-          if (counterElement) {
-            const counterElementText = counterElement.innerText;
-            const elementAsString = counterElement.outerHTML; // 包含元素本身的 HTML 字符串
-            console.log("OuterHTML element: " + elementAsString);
-            console.log(counterElementText);
-            if (typeof counterElementText === 'string') {
-              const numberOfVisit = counterElement.match(/\d{1,3}(?:,\d{3})*/)?.[0];
-              if (numberOfVisit) {
-                console.log(numberOfVisit); // 输出格式化后的数字
-              }
-            } else {
-              console.error('元素文本内容无效');
-            }
-            console.log("number of Visit: " + numberOfVisit);
-            document.getElementById(targetId).style.display = 'inline-block';
-            document.getElementById(targetId).innerText = 
-              `Hi friend, you are the ${numberOfVisit}-th visitor to knock my space.`;
-          } else {
-            console.log("countElement not found.");
-          }
-        </script>
+        <script src="static/visitor-counter.js"></script>
   </body>
 </html>
