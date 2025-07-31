@@ -35,6 +35,33 @@
                 -webkit-text-fill-color: transparent;
                 text-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
+            
+            /* Make ClustrMaps globe widget smaller */
+            #clstr_globe {
+                transform: scale(0.7);
+                transform-origin: center;
+                margin: 10px auto;
+                display: block;
+                max-width: 200px;
+                height: auto;
+            }
+            
+            /* Ensure email layout doesn't get affected by greeting */
+            .email-section {
+                clear: both;
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+            
+            /* Ensure greeting doesn't affect other elements */
+            #greeting to visitor {
+                margin-bottom: 15px;
+            }
+            
+            /* Make sure contact icons stay in place */
+            #contact {
+                margin-top: 10px;
+            }
         </style>
   </body>
 </html>
