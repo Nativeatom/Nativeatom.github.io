@@ -33,6 +33,40 @@ title: "Yiyuan Li"
     margin-right: 5px;
     margin-top: 2px;
   }
+
+  .publication-controls {
+    margin-bottom: 20px;
+  }
+
+  .publication-controls span {
+    cursor: pointer;
+    padding: 4px 8px;
+    margin: 0 5px;
+    border-radius: 3px;
+    transition: background-color 0.2s;
+  }
+
+  .publication-controls span:hover {
+    background-color: #f0f0f0;
+  }
+
+  .publication-controls span.active {
+    background-color: #87ceeb;
+    color: #333;
+  }
+
+  .publication-controls span.active:hover {
+    background-color: #7bb3d3;
+  }
+
+  .publication-controls .separator {
+    cursor: default;
+    color: #666;
+  }
+
+  .publication-controls .separator:hover {
+    background-color: transparent;
+  }
 </style>
 
 
@@ -63,8 +97,13 @@ title: "Yiyuan Li"
 <ul>
 </ul> -->
 <h2>Publications</h2>
-<ul>
-  <li class="paper">
+<div class="publication-controls">
+  <span id="bySelectionBtn" onclick="showBySelection()">Selected</span>
+  <span class="separator">|</span>
+  <span id="byDateBtn" class="active" onclick="showByDate()">All</span>
+</div>
+<ul id="publicationsList">
+  <li class="paper" data-selection="true">
     <div class="paper-bullet">
       <img src="static/images/san-diego.jpg" class="img-thumbnail" width="60px" alt="none" style="border-style: none;">
     </div>
@@ -91,7 +130,7 @@ title: "Yiyuan Li"
         <a href="https://huggingface.co/datasets/GAIR/OlympicArena">[Huggingface]</a>
       </div>
     </li>
-    <li class="paper">
+    <li class="paper" data-selection="true">
       <div class="paper-bullet">
         <img src="static/images/vancouver.png" class="img-thumbnail" width="60px" alt="none" style="border-style: none;">
       </div>
@@ -104,7 +143,7 @@ title: "Yiyuan Li"
         <a href="https://arxiv.org/pdf/2402.02769.pdf">[pdf]</a>
       </div>
     </li>
-    <li class="paper">
+    <li class="paper" data-selection="true">
       <div class="paper-bullet">
         <img src="static/images/miami.png" class="img-thumbnail" width="60px" alt="none" style="border-style: none;">
       </div>
@@ -118,7 +157,7 @@ title: "Yiyuan Li"
         <a href="https://huggingface.co/datasets/GAIR/FRoG">[Huggingface]</a>
       </div>
     </li>
-    <li class="paper">
+    <li class="paper" data-selection="true">
       <div class="paper-bullet">
         <img src="static/images/merlion.png" class="img-thumbnail" width="60px" alt="none" style="border-style: none;">
       </div>
@@ -337,3 +376,32 @@ title: "Yiyuan Li"
     </li>
 </ul>
 
+<script>
+function showByDate() {
+  // Show all papers
+  const papers = document.querySelectorAll('#publicationsList .paper');
+  papers.forEach(paper => {
+    paper.style.display = 'flex';
+  });
+  
+  // Update button states
+  document.getElementById('byDateBtn').classList.add('active');
+  document.getElementById('bySelectionBtn').classList.remove('active');
+}
+
+function showBySelection() {
+  // Show only selected papers
+  const papers = document.querySelectorAll('#publicationsList .paper');
+  papers.forEach(paper => {
+    if (paper.getAttribute('data-selection') === 'true') {
+      paper.style.display = 'flex';
+    } else {
+      paper.style.display = 'none';
+    }
+  });
+  
+  // Update button states
+  document.getElementById('bySelectionBtn').classList.add('active');
+  document.getElementById('byDateBtn').classList.remove('active');
+}
+</script>
