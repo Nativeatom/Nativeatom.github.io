@@ -228,14 +228,9 @@
         
         // Method 3: Use localStorage to maintain a local counter (fallback)
         getLocalCounter: function() {
-            const stored = localStorage.getItem('visitorCounter');
-            if (stored) {
-                return parseInt(stored);
-            }
-            
-            // Generate a random number between 100-999 for first-time visitors
+            // Don't use cached values - always try to get fresh data
+            // Only use localStorage as a last resort with a random number
             const randomCount = Math.floor(Math.random() * 900) + 100;
-            localStorage.setItem('visitorCounter', randomCount.toString());
             return randomCount;
         },
         
@@ -244,8 +239,8 @@
             let count = this.extractFromWidget();
             
             if (!count) {
-                console.log('Trying local counter as fallback');
-                count = this.getLocalCounter();
+                console.log('Could not extract count from ClustrMaps widget, will retry...');
+                return null; // Return null to trigger retry instead of using fallback
             }
             
             return count;
@@ -273,6 +268,12 @@
                     self.retryCount++;
                     console.log(`Retry ${self.retryCount}/${CONFIG.maxRetries} in ${CONFIG.retryDelay}ms`);
                     setTimeout(tryExtract, CONFIG.retryDelay);
+                } else if (!count && self.retryCount >= CONFIG.maxRetries) {
+                    // Only use fallback after all retries are exhausted
+                    console.log('All retries exhausted, using fallback counter');
+                    const fallbackCount = self.getLocalCounter();
+                    await self.displayGreeting(fallbackCount);
+                    hasDisplayed = true;
                 }
             }
             
